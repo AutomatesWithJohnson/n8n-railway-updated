@@ -1,9 +1,9 @@
-FROM n8nio/n8n:latest
+FROM n8nio/n8n:1.100.1
 
 USER root
 
-# Add all your packages here
-RUN apk update && \
-    apk add --no-cache ffmpeg
+RUN apt-get update \
+ && apt-get install -y ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
 
 USER node
