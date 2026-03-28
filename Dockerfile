@@ -13,15 +13,16 @@ RUN apt-get update \
 
 ENV NODE_ENV=production \
     N8N_HOST=0.0.0.0 \
-    N8N_PORT=5678 \
     N8N_PROTOCOL=http \
-    N8N_USER_FOLDER=/home/node/.n8n
+    N8N_USER_FOLDER=/home/node/.n8n \
+    N8N_PROXY_HOPS=1 \
+    FFMPEG_PATH=/usr/bin/ffmpeg
 
 WORKDIR /home/node
 
 USER node
 
-EXPOSE 5678
+EXPOSE 8080
 
 ENTRYPOINT ["tini", "--"]
-CMD ["n8n", "start"]
+CMD ["sh", "-c", "export N8N_PORT=${PORT:-8080} && n8n start"]
